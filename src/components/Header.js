@@ -1,61 +1,37 @@
-import HeaderLinks from "./HeaderLinks";
-import data from "../static/data.json";
-import Logo from "./Logo";
 import { useEffect, useState } from "react";
-import MenuIcon from "./MenuIcon";
-import Menu from "./Menu";
+import FullWidthHeader from "./FullWidthHeader";
+import MobileHeader from "./MobileHeader";
+import data from "../static/data.json";
 
 const Header = () => {
+    const [isLargeScreen, setIsLargeScreen] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
-    const [largeScreen, setLargeScreen] = useState(false);
-    const [scrolledDown, setScrolledDown] = useState(false);
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
 
-    // Event listener to determine scroll
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolledDown(window.scrollY >= 20);
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth >= 768);
         };
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("resize", handleResize);
 
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("resize", handleResize);
     });
 
-    // Event listener to determine screen size
-    useEffect(() => {
-        console.log("use effect ran");
-        const screenResize = () => {
-            setLargeScreen(window.innerWidth >= 768);
-        };
-
-        window.addEventListener("resize", screenResize);
-
-        return () => {
-            window.removeEventListener("resize", screenResize);
-        };
-    }, [setLargeScreen]);
-
-    const setBackground = () => {
-        console.log("this ran");
-        return largeScreen || scrolledDown ? "red-bg" : "";
-    };
-
-    return (
-        <header className={`row layout-header sticky-top ${setBackground()}`}>
-            <Logo light={largeScreen || scrolledDown || showMenu} />
-            <HeaderLinks links={data.links} />
-            <MenuIcon
-                toggleMenu={toggleMenu}
+    if (isLargeScreen) {
+        return <FullWidthHeader links={data.links} />;
+    } else {
+        return (
+            <MobileHeader
                 showMenu={showMenu}
-                light={showMenu || scrolledDown}
+                toggleMenu={toggleMenu}
+                links={data.links}
             />
-            <Menu showMenu={showMenu} links={data.links} />
-        </header>
-    );
+        );
+    }
 };
 
 export default Header;

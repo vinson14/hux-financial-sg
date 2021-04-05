@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import Layout from "./components/Layout";
 import "./App.css";
 import data from "./static/data.json";
+import About from "./pages/about/About";
 
 function App() {
     return (
@@ -15,6 +16,9 @@ function App() {
                 <Switch>
                     <Route path="/" exact>
                         <Home />
+                    </Route>
+                    <Route path="/about" exact>
+                        <About />
                     </Route>
                 </Switch>
             </Layout>

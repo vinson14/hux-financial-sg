@@ -1,11 +1,10 @@
 import HeaderLink from "./HeaderLink";
-import HeaderLinks from "./HeaderLinks";
 
-const Menu = ({ showMenu, links }) => {
+const Menu = ({ showMenu, links, toggleMenu }) => {
     return (
         <div className={`full-page-menu ${showMenu ? "visible" : "invisible"}`}>
             {links.map((link) => (
-                <HeaderLink link={link} key={link.to} />
+                <HeaderLink link={link} key={link.to} onClick={toggleMenu} />
             ))}
         </div>
     );
