@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
+import Home from "./pages/home/Home";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.css";
+import Layout from "./components/Layout";
+import "./App.css";
+import data from "./static/data.json";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <ScrollToTop />
+            <Layout links={data.links}>
+                <Switch>
+                    <Route path="/" exact>
+                        <Home />
+                    </Route>
+                </Switch>
+            </Layout>
+        </Router>
+    );
 }
 
 export default App;
